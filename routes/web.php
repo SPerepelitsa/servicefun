@@ -29,6 +29,10 @@ Route::get('blog', ['as' => 'blog.index', 'uses' => 'BlogController@getIndex'])-
 
 Route::resource('posts', 'PostController');
 
+// Salary Routes
+
+Route::resource('salary', 'SalaryController');
+
 // Authentification and Registration Routes
 
 Auth::routes();

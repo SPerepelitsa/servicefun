@@ -122,11 +122,11 @@ a.navbar-brand span {
     margin-bottom: 0;
 }
 
-li.dropdown a.dropdown-toggle{
+li.dropdown a.dropdown-toggle {
     background-color: #0db4be;
 }
 
-li.dropdown a.dropdown-toggle:hover{
+li.dropdown a.dropdown-toggle:hover {
     background-color: #36CBD4;
 }
 
@@ -134,7 +134,6 @@ li.dropdown.open > a.dropdown-toggle {
     color: #36CBD4;
     background-color: #fff;
 }
-
 
 .slider {
     margin-top: 110px;
@@ -723,3 +722,19 @@ a.scrollup:hover {
     background-color: #0db4be;
     color: #fff;
 }
+
+/*=========================
+  Table
+ ================= */
+
+.salary-total {
+    margin-top: 150px;
+    margin-bottom: 100px;
+}
+
+table.table thead {
+    color: #fff;
+    background-color: #0DB4BE;
+}
+
+

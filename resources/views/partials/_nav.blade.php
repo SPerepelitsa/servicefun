@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href=""><span>Service-Fun</span></a>
+            <a class="navbar-brand" href="/"><span>Service-Fun</span></a>
         </div>
         <div class="navbar-collapse collapse">
             <div class="menu">
@@ -18,7 +18,7 @@
                     <li class="{{Request::is('blog') ? "active" : ""}}" role="presentation"><a href="{{route('blog.index')}}">Блог</a></li>
                     <li class="{{Request::is('posts/create') ? "active" : ""}}" role="presentation"><a href="{{route('posts.create')}}">Заметки</a></li>
                     <li class="{{Request::is('gallery') ? "active" : ""}}" role="presentation"><a href="{{route('gallery')}}">Галерея</a></li>
-                    <li role="presentation"><a href="{{route('home')}}">Зарплата</a></li>
+                    <li role="presentation"><a href="{{route('salary.create')}}">Зарплата</a></li>
 
                     @if(Auth::check())
 

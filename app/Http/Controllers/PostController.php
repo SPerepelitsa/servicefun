@@ -118,12 +118,22 @@ class PostController extends Controller {
         $slug = $post->generateSlug($post->title);
         $post->slug = $slug;
 
+        //adds a new picture to the storage
         if($request->hasFile('image')) {
             $image = $request->file('image');
-            $filename = time() . "." . $image->getClientOriginalExtension();
+            $filename = time() . "." . $image->getClientOriginalExtension(); // sets the file name.
             $location = public_path('img/posts/' . $filename); // foldername_path. We use public_path because we gonna save it into public folder.
-            Image::make($image)->resize(800, 400)->save($location); // use http://image.intervention.io/
+            Image::make($image)->resize(800, 400)->save($location); // use http://image.intervention.io/ ---- saves image to a public storage
 
+            //delets old picture from the storage if it exists.
+            if($post->image != null) {
+                $img_location = public_path('img/posts/' . $post->image);
+                if(file_exists($img_location)) {
+                    unlink($img_location);
+                }
+            }
+
+            //saves a new file name to database.
             $post->image = $filename;
 
         }

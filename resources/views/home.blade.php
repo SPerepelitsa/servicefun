@@ -9,7 +9,7 @@
                 <div class="img-responsive">
                     <ul class="bxslider">
                         <li><img src="img/011.jpg" alt=""/></li>
-                        <li><img src="img/01.jpg" alt=""/></li>
+                        <li><img src="img/02.jpg" alt=""/></li>
                         <li><img src="img/01.jpg" alt=""/></li>
                     </ul>
                 </div>
