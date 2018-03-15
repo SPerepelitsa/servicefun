@@ -20,7 +20,6 @@ class CreateSalariesTable extends Migration
             $table->decimal('working_hours', 8, 2)->unsigned();
             $table->integer('assembling')->nullable();
             $table->integer('cashless_payment');
-            $table->decimal('cash', 8, 2)->unsigned();
             $table->decimal('total', 8, 2)->unsigned();
             $table->timestamps();
         });

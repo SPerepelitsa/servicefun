@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Auth;
 use Image;
 use Session;
 
 
-class PostController extends Controller {
+class PostController extends Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -19,7 +22,8 @@ class PostController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $posts = Post::orderBy('id', 'desc')->paginate(10); // shows all posts (№items per page) with pagination
 
         return view('blog.index')->with('posts', $posts); // alterantive writing is ->withPosts($posts);
@@ -30,7 +34,8 @@ class PostController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         return view('posts.create');
     }
 
@@ -41,7 +46,8 @@ class PostController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'title' => 'required|max:255',
             'body'  => 'required',
@@ -54,19 +60,20 @@ class PostController extends Controller {
         $slug = $post->generateSlug($post->title);
         $post->slug = $slug;
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $filename = time() . "." . $image->getClientOriginalExtension();
+            $filename = md5(microtime(true)) . "." . $image->getClientOriginalExtension();
             $location = public_path('img/posts/' . $filename); // foldername_path. We use public_path because we gonna save it into public folder.
             Image::make($image)->resize(800, 400)->save($location); // use http://image.intervention.io/
 
             $post->image = $filename;
 
         }
+        $post->user_id = Auth::id();
 
         $post->save();
 
-        Session::flash('success', 'Создание записи завершилось успехом.');
+        Session::flash('success', 'Запись успешно создана.');
 
         return redirect()->route('blog.index');
     }
@@ -78,7 +85,8 @@ class PostController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($slug) {
+    public function show($slug)
+    {
         $post = Post::where('slug', '=', $slug)->first();
 
         return view('posts.show')->with('post', $post);
@@ -91,7 +99,8 @@ class PostController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $post = Post::find($id);
 
         return view('posts.edit')->with('post', $post);
@@ -105,7 +114,8 @@ class PostController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'title' => 'required|max:255',
             'body'  => 'required',
@@ -119,17 +129,18 @@ class PostController extends Controller {
         $post->slug = $slug;
 
         //adds a new picture to the storage
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $filename = time() . "." . $image->getClientOriginalExtension(); // sets the file name.
+            $filename = md5(microtime(true)) . "." . $image->getClientOriginalExtension(); // sets the file name.
             $location = public_path('img/posts/' . $filename); // foldername_path. We use public_path because we gonna save it into public folder.
-            Image::make($image)->resize(800, 400)->save($location); // use http://image.intervention.io/ ---- saves image to a public storage
+            Image::make($image)->resize(800,
+                400)->save($location); // use http://image.intervention.io/ ---- saves image to a public storage
 
             //delets old picture from the storage if it exists.
-            if($post->image != null) {
-                $img_location = public_path('img/posts/' . $post->image);
-                if(file_exists($img_location)) {
-                    unlink($img_location);
+            if ($post->image != null) {
+                $imgLocation = public_path('img/posts/' . $post->image);
+                if (file_exists($imgLocation)) {
+                    unlink($imgLocation);
                 }
             }
 
@@ -154,13 +165,14 @@ class PostController extends Controller {
      * @internal param Post $post
      *
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
 
         $post = Post::find($id);
-        if($post->image != null) {
-            $img_location = public_path('img/posts/' . $post->image);
-            if(file_exists($img_location)) {
-                unlink($img_location);
+        if ($post->image != null) {
+            $imgLocation = public_path('img/posts/' . $post->image);
+            if (file_exists($imgLocation)) {
+                unlink($imgLocation);
             }
         }
 

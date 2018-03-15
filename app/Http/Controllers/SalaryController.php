@@ -9,21 +9,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Session;
 
-class SalaryController extends Controller {
+class SalaryController extends Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
 
 
-        $salary_all = Salary::orderByDesc('month_id')->get();
-       return view('salary.index')->with('salary_all', $salary_all);
+        $salaryAll = Salary::orderByDesc('month_id')->get();
+
+        return view('salary.index')->with('salaryAll', $salaryAll);
     }
 
     /**
@@ -31,13 +36,14 @@ class SalaryController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
 
         $months = Month::all();
 
-        $salary_users = User::select(['id', 'name'])->whereIn('id', [1, 3])->get();
+        $salaryUsers = User::select(['id', 'name'])->whereIn('id', [1, 3])->get();
 
-        return view('salary.create')->with(compact('months','salary_users'));
+        return view('salary.create')->with(compact('months', 'salaryUsers'));
     }
 
     /**
@@ -47,54 +53,56 @@ class SalaryController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $request->validate([
-            'month_num' => 'required|integer',
-            'user_id' => 'required|integer',
-            'cashless_payment' => 'required|integer',
-            'working_hours_sec' => 'required|integer',
-            'assembling' => 'integer',
+            'month_id'          => 'required|integer',
+            'user_id'           => 'required|integer',
+            'working_hours_sec' => 'required|max:999999|integer',
+            'assembling'        => 'required|integer',
         ]);
 
         $salary = new Salary();
-        $salary->month_num = $request->month_num;
+        $salary->month_id = $request->month_id;
         $salary->user_id = $request->user_id;
-        $salary->cashless_payment = $request->cashless_payment;
 
-        $wha = ($request->working_hours_sec)/3600 ; // wha - working hours amount. Converting working seconds to hours.
-        $hour_rate = 42;
-        $dep_index = 1.2; // dep_index - department index.
-        $pers_index = 0.2; // $pers_index - personal index.
-        $total_index = $dep_index + $pers_index;
-        $working_hours = $wha * $total_index*$hour_rate;
-        $salary->working_hours = $working_hours;
+        $workingHoursAmount = ($request->working_hours_sec) / 3600;
+        $hourRate = 42;
+        $departmentIndex = 1.2;
+        $personalIndex = 0.2;
+        $totalIndex = $departmentIndex + $personalIndex; // 1.4
+        $workingHours = $workingHoursAmount * $totalIndex * $hourRate;
+        $salary->working_hours = $workingHours;
 
-        $assembl_price = 75; // assembling prise for 1 unit.
-        $assemling = ($request->assembling)*$assembl_price;
-        $salary->assembling = $assemling;
+        if ($request->assembling > 0) {
+            $assemblingPrice = 75;
+            $assembling = ($request->assembling) * $assemblingPrice;
+        } else {
+            $assembling = 0;
+        }
+        $salary->assembling = $assembling;
 
-        if( $request->user_id == 3){
+        if ($request->user_id == 3) {
             $wage_rate = 4000;
-        }else{
+        } else {
             $wage_rate = 3200;
         }
 
-        $wage = $wage_rate + $working_hours;
-        $diff = $wage-($request->cashless_payment);
+        $wage = $wage_rate + $workingHours;
+        $tax = 0.195; // 19.5% tax
+        $cashlessPayment = $wage - ($wage * $tax);
+        $salary->cashless_payment = $cashlessPayment;
 
-        $cash = $assemling + $diff;
-        $salary->cash = $cash;
-        
-        $total = $cash + ($request->cashless_payment);
+        $total = $assembling + $cashlessPayment;
         $salary->total = $total;
 
         $salary->save();
 
         Session::flash('success', 'Зарплата расчитана успешно');
 
-        return redirect()->route('home');
-        
+        return redirect()->route('salary.index');
+
     }
 
     /**
@@ -104,8 +112,10 @@ class SalaryController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $salary = Salary::find($id);
+
         return view()->route('salary.show')->with('salary', $salary);
     }
 
@@ -116,7 +126,8 @@ class SalaryController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Salary $salary) {
+    public function edit(Salary $salary)
+    {
         //
     }
 
@@ -128,7 +139,8 @@ class SalaryController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Salary $salary) {
+    public function update(Request $request, Salary $salary)
+    {
         //
     }
 
@@ -139,7 +151,8 @@ class SalaryController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Salary $salary) {
+    public function destroy(Salary $salary)
+    {
         //
     }
 }

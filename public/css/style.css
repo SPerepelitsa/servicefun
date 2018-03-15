@@ -311,6 +311,12 @@ li.dropdown.open > a.dropdown-toggle {
     color: #36CBD4;
 }
 
+.blog .author p {
+    font: italic lighter 14px/1.4 Georgia, serif;
+    color: #b5b5b5;
+
+}
+
 .form-search .form-control {
     margin-top: 50px;
 }

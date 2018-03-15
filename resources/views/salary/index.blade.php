@@ -20,13 +20,12 @@
                                 <th scope="col">Нормочасы/грн</th>
                                 <th scope="col">Сбоки/грн</th>
                                 <th scope="col">Б/Н грн</th>
-                                <th scope="col">Нал./грн</th>
                                 <th scope="col">Сумма/грн</th>
                                 <th scope="col">Управление</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($salary_all as $salary)
+                            @foreach($salaryAll as $salary)
                                 <tr>
 
                                     <th scope="row">{{$salary->user->name}}</th>
@@ -34,7 +33,6 @@
                                     <td>{{$salary->working_hours}}</td>
                                     <td>{{$salary->assembling}}</td>
                                     <td>{{ $salary->cashless_payment}}</td>
-                                    <td>{{$salary->cash}}</td>
                                     <td>{{$salary->total}}</td>
                                     <td class="text-center">
                                         <a href="" class="glyphicon glyphicon-pencil"></a>
