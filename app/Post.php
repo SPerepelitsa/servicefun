@@ -63,4 +63,9 @@ class Post extends Model
 
         return $text;
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
