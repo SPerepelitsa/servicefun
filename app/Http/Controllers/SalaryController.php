@@ -24,8 +24,6 @@ class SalaryController extends Controller
      */
     public function index()
     {
-
-
         $salaryAll = Salary::orderByDesc('month_id')->get();
 
         return view('salary.index')->with('salaryAll', $salaryAll);
@@ -38,10 +36,9 @@ class SalaryController extends Controller
      */
     public function create()
     {
-
         $months = Month::all();
 
-        $salaryUsers = User::select(['id', 'name'])->whereIn('id', [1, 3])->get();
+        $salaryUsers = User::select(['id', 'name'])->whereIn('email', ['roma@servicefun.com', 'admin@servicefun.com'])->get();
 
         return view('salary.create')->with(compact('months', 'salaryUsers'));
     }

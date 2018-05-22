@@ -23,8 +23,6 @@
     </div>
 
 
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -40,7 +38,7 @@
 
                             <p>{!! substr($post->body, 0,600) !!} {{strlen($post->body) > 300 ? " ..." : "" }}</p>
                             <div class="author">
-                                <p>Автор: {{$post->user_id}} </p>
+                                <p>Автор: {{$post->user->name}} </p>
                             </div>
 
                             <div class="ficon">
