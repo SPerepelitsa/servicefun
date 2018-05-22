@@ -8,7 +8,6 @@ use Auth;
 use Image;
 use Session;
 
-
 class PostController extends Controller
 {
 
@@ -143,12 +142,9 @@ class PostController extends Controller
                     unlink($imgLocation);
                 }
             }
-
             //saves a new file name to database.
             $post->image = $filename;
-
         }
-
         $post->save();
 
         Session::flash('succsess', 'Запись отредактирована успешно.');
@@ -167,7 +163,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-
         $post = Post::find($id);
         if ($post->image != null) {
             $imgLocation = public_path('img/posts/' . $post->image);
@@ -175,7 +170,6 @@ class PostController extends Controller
                 unlink($imgLocation);
             }
         }
-
         $post->delete();
 
         Session::flash('success', 'Запись была успешно удалена!');

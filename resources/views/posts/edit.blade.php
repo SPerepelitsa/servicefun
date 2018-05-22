@@ -34,6 +34,7 @@
                     <br><br>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-lg">Сохранить</button>
+                        <a href="{{ URL::previous() }}" class="btn btn-primary btn-lg" role="button">Отмена</a>
                     </div>
                 </form>
             </div>

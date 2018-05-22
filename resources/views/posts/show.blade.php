@@ -6,7 +6,6 @@
 
 @section('content')
 
-
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -23,9 +22,6 @@
         </div>
     </div>
 
-
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -40,10 +36,9 @@
 
                         <p>{!! $post->body !!}</p>
 
-
                     </div>
                     <hr>
-                    @if(Auth::user()->id == 1)
+                    @if(Auth::user()->isAuthor($post->id))
                         <div class="btn-group" role="group">
                             <a class="btn btn-warning" href="{{route('posts.edit', $post->id)}}" alt="">Редактировать</a>
                             <form method="POST" action="{{route('posts.destroy', $post->id)}}" style="display: inline-block;">

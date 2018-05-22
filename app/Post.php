@@ -8,7 +8,6 @@ class Post extends Model
 {
     public function generateSlug($s)
     {
-
         $s = (string)$s; // converts to string
         $s = strip_tags($s); // removes HTML-tags
         $s = str_replace(array("\n", "\r"), " ", $s); // removes newlines.
@@ -53,12 +52,10 @@ class Post extends Model
         $s = preg_replace("/[^0-9a-z-_ ]/i", "", $s); // removes invalid characters from the string.
         $s = str_replace(" ", "-", $s); // changes "space" to "-"(minus)
         return $s; // returns the result
-
     }
 
     public function getShortBody($text)
     {
-
         $text = substr($text, 0, 300);
 
         return $text;
