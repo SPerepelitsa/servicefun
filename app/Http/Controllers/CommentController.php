@@ -46,7 +46,7 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        // TODO implement this
     }
 
     /**
@@ -58,7 +58,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO implement this
     }
 
     /**
@@ -69,6 +69,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO implement this
     }
 }
