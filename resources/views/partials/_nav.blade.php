@@ -27,7 +27,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li ><a href="">Профиль</a></li>
-                            <li><a href="">Мои заметки</a></li>
+                            <li><a href="{{ route('myposts')}}">Мои заметки</a></li>
                             <li><a href="">Сообщения</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('logout') }}">Выход</a></li>

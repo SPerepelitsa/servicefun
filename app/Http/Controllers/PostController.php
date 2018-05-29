@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use Illuminate\Http\Request;
+use App\Post;
 use Auth;
 use Image;
 use Session;
@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(10); // shows all posts (№items per page) with pagination
+        $posts = Post::orderBy('id', 'desc')->paginate(10); // shows all posts (№items per page) with pagination;
 
         return view('blog.index')->with('posts', $posts); // alterantive writing is ->withPosts($posts);
     }
@@ -87,8 +87,9 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', '=', $slug)->first();
-
-        return view('posts.show')->with('post', $post);
+        $comments = $post->comments;
+        
+        return view('posts.show')->with('post', $post)->with('comments', $comments);
     }
 
     /**

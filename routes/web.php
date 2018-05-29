@@ -24,6 +24,7 @@ Route::get('gallery', function () {
 //Blog Routes
 
 Route::get('blog', ['as' => 'blog.index', 'uses' => 'BlogController@getIndex'])->middleware('auth');
+Route::get('blog/myposts', 'BlogController@getUserPosts')->name('myposts')->middleware('auth');
 
 // Post Routes
 
@@ -32,6 +33,13 @@ Route::resource('posts', 'PostController');
 // Salary Routes
 
 Route::resource('salary', 'SalaryController');
+
+//Comments Routes
+
+Route::post('comments/{post_id}/{user_id}', ['as' => 'comments.store', 'uses' => 'CommentController@store']);
+Route::get('comments/{id}/edit', ['as' => 'comments.edit', 'uses' => 'CommentController@edit']);
+Route::put('comments/{id}/update', ['as' => 'comments.update', 'uses' => 'CommentController@update']);
+Route::delete('comments/{id}', ['as' => 'comments.destroy', 'uses' => 'CommentController@destroy']);
 
 // Authentification and Registration Routes
 
