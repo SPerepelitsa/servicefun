@@ -36,10 +36,10 @@ Route::resource('salary', 'SalaryController');
 
 //Comments Routes
 
-Route::post('comments/{post_id}/{user_id}', ['as' => 'comments.store', 'uses' => 'CommentController@store']);
+Route::post('comments/{post_id}', ['as' => 'comments.store', 'uses' => 'CommentController@store']);
 Route::get('comments/{id}/edit', ['as' => 'comments.edit', 'uses' => 'CommentController@edit']);
 Route::put('comments/{id}/update', ['as' => 'comments.update', 'uses' => 'CommentController@update']);
-Route::delete('comments/{id}', ['as' => 'comments.destroy', 'uses' => 'CommentController@destroy']);
+Route::get('comments/{id}', ['as' => 'comments.delete', 'uses' => 'CommentController@destroy']);
 
 // Authentification and Registration Routes
 
