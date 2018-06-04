@@ -69,13 +69,9 @@ class CommentController extends Controller
             'body' => 'required|min:2|max:2000',
         ]);
 
-        $user = Auth::user();
         $comment = Comment::findOrFail($id);
         $post = $comment->post;
-
         $comment->body = $request->body;
-        $comment->post_id = $post->id;
-        $comment->user_id = $user->id;
 
         $comment->save();
 
@@ -91,7 +87,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $comment = Comment::find($id);
+        $comment = Comment::findOrFail($id);
         $postSlug = $comment->post->slug;
         $comment->delete();
 
