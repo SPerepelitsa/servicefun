@@ -50,24 +50,4 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment');
     }
-
-    public function isPostAuthor($postId)
-    {
-        $post = Post::find($postId);
-        if ($this->id == $post->user_id) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function isCommentAuthor($commentId)
-    {
-        $comment = Comment::find($commentId);
-        if ($this->id == $comment->user_id) {
-            return true;
-        }
-
-        return false;
-    }
 }

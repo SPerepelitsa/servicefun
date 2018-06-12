@@ -87,9 +87,10 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', '=', $slug)->first();
-        $comments = $post->comments;
-        
-        return view('posts.show')->with('post', $post)->with('comments', $comments);
+        $parentComments = $post->comments->where('parent_id', null);
+        $commentsAmount = count($post->comments);
+
+        return view('posts.show')->with('post', $post)->with('comments',$parentComments)->with('amount', $commentsAmount);
     }
 
     /**

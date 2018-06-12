@@ -32,6 +32,7 @@ class CommentController extends Controller
 
         $comment = new Comment();
         $comment->body = $request->body;
+        $comment->parent_id = $request->get('parent_id', null);
         $comment->post_id = $post->id;
         $comment->user_id = $user->id;
         $comment->post()->associate($post);

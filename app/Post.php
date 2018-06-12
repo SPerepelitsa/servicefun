@@ -70,4 +70,9 @@ class Post extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function isAuthor($userId)
+    {
+        return $this->user_id === $userId;
+    }
 }
