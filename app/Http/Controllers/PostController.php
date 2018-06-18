@@ -90,7 +90,7 @@ class PostController extends Controller
         $parentComments = $post->comments->where('parent_id', null);
         $commentsAmount = count($post->comments);
 
-        return view('posts.show')->with('post', $post)->with('comments',$parentComments)->with('amount', $commentsAmount);
+        return view('posts.show')->with('post', $post)->with('comments', $parentComments)->with('amount', $commentsAmount);
     }
 
     /**
