@@ -41,13 +41,13 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
 
-    public function isAuthor($postId)
+    public function posts()
     {
-        $post = Post::find($postId);
-        if ($this->id == $post->user_id) {
-            return true;
-        }
+        return $this->hasMany('App\Post', 'user_id');
+    }
 
-        return false;
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 }

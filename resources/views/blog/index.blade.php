@@ -32,17 +32,26 @@
 
                         @foreach($posts as $post)
                             <h5>{{$post->created_at->format('F j, Y')}}</h5>
-                            <img src="img/posts/{{$post->image}}" class="img-responsive" alt=""/>
+                            <img src="/img/posts/{{$post->image}}" class="img-responsive" alt=""/>
 
                             <h3>{{$post->title}}</h3>
 
                             <p>{!! substr($post->body, 0,600) !!} {{strlen($post->body) > 300 ? " ..." : "" }}</p>
-                            <div class="author">
-                                <p>Автор: {{$post->user->name}} </p>
+
+                        <div class="text-center">
+                            <div class="col-md-4  author">
+                                    <p>Автор: {{$post->user->name}}</p>
+                            </div>
+                            <div class="col-md-4  author">
+
                             </div>
 
+                            <div class="col-md-4  author">
+                                <p>Комментариев:{{ count($post->comments) }}</p>
+                            </div>
+                        </div>
                             <div class="ficon">
-                                <a href="{{route('posts.show', $post->slug)}}" alt="">Читать полностью</a>
+                              <a href="{{route('posts.show', $post->slug)}}" alt="">Читать полностью</a>
                             </div>
                             <hr>
 
