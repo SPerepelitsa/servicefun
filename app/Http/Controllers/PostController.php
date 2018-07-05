@@ -23,9 +23,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(10); // shows all posts (№items per page) with pagination;
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
 
-        return view('blog.index')->with('posts', $posts); // alterantive writing is ->withPosts($posts);
+        return view('blog.index')->with('posts', $posts);
     }
 
     /**
@@ -62,7 +62,7 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = md5(microtime(true)) . "." . $image->getClientOriginalExtension();
-            $location = public_path('img/posts/' . $filename); // foldername_path. We use public_path because we gonna save it into public folder.
+            $location = public_path('img/posts/' . $filename);
             Image::make($image)->resize(800, 400)->save($location); // use http://image.intervention.io/
 
             $post->image = $filename;
@@ -90,7 +90,8 @@ class PostController extends Controller
         $parentComments = $post->comments->where('parent_id', null);
         $commentsAmount = count($post->comments);
 
-        return view('posts.show')->with('post', $post)->with('comments', $parentComments)->with('amount', $commentsAmount);
+        return view('posts.show')->with('post', $post)->with('comments', $parentComments)->with('amount',
+            $commentsAmount);
     }
 
     /**

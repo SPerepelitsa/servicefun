@@ -35,8 +35,7 @@ class CommentController extends Controller
         $comment->parent_id = $request->get('parent_id', null);
         $comment->post_id = $post->id;
         $comment->user_id = $user->id;
-        $comment->post()->associate($post);
-
+       
         $comment->save();
 
         return redirect()->back();
