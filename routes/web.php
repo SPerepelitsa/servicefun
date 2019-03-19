@@ -44,7 +44,6 @@ Route::get('comments/{id}', ['as' => 'comments.delete', 'uses' => 'CommentContro
 // Authentification and Registration Routes
 
 Auth::routes();
-
+Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
 Route::get('logout', 'Auth\LoginController@logout');
-
 Route::get('/home', 'HomeController@index')->name('home');

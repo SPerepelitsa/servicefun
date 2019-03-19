@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function verifyUser()
+    {
+       return $this->hasOne('App\VerifyUser');
+    }
 }
